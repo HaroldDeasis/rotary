@@ -1,0 +1,82 @@
+CREATE TABLE tblMembershipDues (
+	dueID varchar(7) not null,
+	rotaryInternational int() not null,
+	governorsFund int() not null,
+	philipineRotaryMagazine int() not null,
+	theRotaryFoundation int() not null,
+	totalDues int() not null,
+	Primary Key(dueID)
+);
+
+CREATE TABLE tblRotarians (
+	rotarianID varchar(7) not null, 
+	lastName   varchar(25) not null,
+	firstName  varchar(25) not null,
+	middleName varchar(25) not null,
+	gender     enum('M', 'F') not null,
+	birthday   date() not null,
+	address    varchar(150) not null,
+	profession varchar() not null,
+	contactNumber    varchar(13) not null,
+	emailAddress      varchar(30) not null,
+	sponsor    varchar(30) not null,
+	status     enum('Active', Inactive') not null,
+	image	   Blob null,
+	dueID varchar(7) not null,
+	Primary key(rotarianID),
+	Foreign Key(dueID) references tblMembershipDues(dueID)
+);
+
+CREATE TABLE tblProjects (
+	projectID varchar(7) not null,
+	projectTitle varchar(150) not null,
+	projectDescription varchar(255) not null,
+	classification varchar(25) not null,
+	venue varchar(50) not null,
+	date date() not null,
+	beneficiaries varchar() not null,
+	facilitators varchar() not null,
+	partners varchar(50) null,
+	jointProject enum('Y','N') null,joint na*/
+	status enum('Finished', 'Ongoing') not null,
+	images Blob null,
+	Primary Key(projectID)
+);
+
+CREATE TABLE tblExpense (
+	expenseID varchar(7) not null,
+	expenseDescription varchar(30) not null,
+	expenseamountint() not null,
+	projectID varchar(7) not null,
+	Primary Key(expenseID),
+	Foreign Key(projectID) references tblProjects(projectID)
+);
+
+CREATE TABLE tblDonations (
+	donorID varchar(7) not null AUTO_INCREMENT,
+	donor varchar() not null,
+	dateDonated datetime() not null,
+	amount int() not null,
+	Primary Key(donorID)
+);
+
+CREATE TABLE tblclub_listing (
+	eventID varchar(7) not null,
+	eventName varchar(50) not null,
+	eventDate date() not null,
+	eventAmount int() not null,
+	dueID varchar(7) not null,
+	Primary Key(eventID),
+	Foreign Key(dueID) references tblMembershipDues(dueID)
+);
+
+CREATE TABLE tblOtherDues (
+	otherDuesID varchar(7) not null,
+	dueName varchar(25) not null,
+	otherDuesAmount int() not null,
+	dueID varchar(7) not null,
+	Primary Key(otherDuesID),
+	Foreign Key(dueID) references tblMembershipDues(dueID)
+);
+
+
